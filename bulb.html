@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CRUD App with Bulb</title>
+    <style>
+        body {
+            background-color: black;
+            font-family: Arial, sans-serif;
+            text-align: center;
+            color: blueviolet;
+        }
+
+        #crud-form {
+            margin: 20px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+
+        #bulb {
+            margin: 20px;
+            width: 100px;
+            transition: 0.3s;
+        }
+
+        .btn {
+            padding: 10px;
+            margin: 5px;
+            background-color: green;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>CRUD App with Bulb</h1>
+
+    <div id="crud-form">
+        <label for="task">Task:</label>
+        <input type="text" id="task" placeholder="Enter task">
+        <button onclick="addTask()">Add Task</button>
+    </div>
+
+    <table id="task-list">
+        <tr>
+            <th>ID</th>
+            <th>Task</th>
+            <th>Action</th>
+        </tr>
+    </table>
+
+    <img id="bulb" src="img/bulb-off.png" alt="Bulb">
+    <button id="bulbBtn" class="btn" onclick="toggleBulb()">Turn On</button>
+
+    <script>
+        let taskId = 1;
+        let bulbOn = false;
+
+        function addTask() {
+            const taskInput = document.getElementById('task');
+            const taskValue = taskInput.value.trim();
+
+            if (taskValue !== '') {
+                const table = document.getElementById('task-list');
+                const newRow = table.insertRow(-1);
+
+                const cell1 = newRow.insertCell(0);
+                const cell2 = newRow.insertCell(1);
+                const cell3 = newRow.insertCell(2);
+
+                cell1.textContent = taskId++;
+                cell2.textContent = taskValue;
+                cell3.innerHTML = '<button onclick="deleteTask(this)">Delete</button>';
+                
+                taskInput.value = '';
+            }
+        }
+
+        function deleteTask(button) {
+            const row = button.parentNode.parentNode;
+            row.parentNode.removeChild(row);
+        }
+
+        function toggleBulb() {
+            const bulb = document.getElementById('bulb');
+            const bulbBtn = document.getElementById('bulbBtn');
+
+            if (bulbOn) {
+                bulb.src = "img/bulb-off.png";
+                bulbBtn.textContent = "Turn On";
+            } else {
+                bulb.src = "img/bulb-on.png";
+                bulbBtn.textContent = "Turn Off";
+            }
+
+            bulbOn = !bulbOn;
+        }
+    </script>
+
+</body>
+</html>
